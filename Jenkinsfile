@@ -7,8 +7,10 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
+                echo 'Downloading source code from GitHub'
                 checkout scm
             }
         }
@@ -22,21 +24,23 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Checking Python application'
+                echo 'Compiling Python application'
                 bat '"%PYTHON%" -m py_compile app.py'
+                echo 'Build completed successfully'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Executing automated tests'
-                bat '"%PYTHON%" -m unittest app'
+                echo 'Executing automated unit tests'
+                bat '"%PYTHON%" -m unittest app -v'
+                echo 'All tests completed successfully'
             }
         }
 
-        stage('Run application') {
+        stage('Run Application') {
             steps {
-                echo 'Running Python application'
+                echo 'Running Student Calculator Application'
                 bat '"%PYTHON%" app.py'
             }
         }
@@ -44,13 +48,24 @@ pipeline {
 
     post {
         success {
-            echo 'CI pipeline completed successfully!'
+            echo '================================'
+            echo 'CI PIPELINE COMPLETED SUCCESSFULLY!'
+            echo '================================'
         }
 
         failure {
-            echo 'CI pipeline failed!'
+            echo '================================'
+            echo 'CI PIPELINE FAILED!'
+            echo 'Check Console Output for errors'
+            echo '================================'
+        }
+
+        always {
+            echo 'Jenkins Pipeline Execution Finished'
         }
     }
 }
+
+
 
 
