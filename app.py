@@ -15,8 +15,8 @@ class TestCalculator
   self.assertEqual(multiply(6,4),24)
 if__name__=="__main__":
   print("student calculator application")
-  print("addition:",add(20,20))
-  print("subtraction:",subtract(20,10))
-  print("multiplication:",multiply(5,4))
+  print("addition:",add(20,40))
+  print("subtraction:",subtract(20,15))
+  print("multiplication:",multiply(6,4))
   print("\nExceuting automated tests.\n")
   unittest.main(argc=['first-arg-is-ignored'],exit=False)
