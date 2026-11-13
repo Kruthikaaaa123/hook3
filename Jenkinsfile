@@ -1,7 +1,10 @@
 
-
 pipeline {
     agent any
+
+    environment {
+        PYTHON = 'C:\\Users\\STUDENT\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
+    }
 
     stages {
         stage('Checkout') {
@@ -10,34 +13,44 @@ pipeline {
             }
         }
 
+        stage('Check Python') {
+            steps {
+                echo 'Checking Python installation'
+                bat '"%PYTHON%" --version'
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Checking Python application'
-                bat 'py -m py_compile app.py'
+                bat '"%PYTHON%" -m py_compile app.py'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Executing automated test'
-                bat 'py -m unittest app'
+                echo 'Executing automated tests'
+                bat '"%PYTHON%" -m unittest app'
             }
         }
 
         stage('Run application') {
             steps {
-                bat 'py app.py'
+                echo 'Running Python application'
+                bat '"%PYTHON%" app.py'
             }
         }
     }
 
     post {
         success {
-            echo 'CI pipeline completed successfully'
+            echo 'CI pipeline completed successfully!'
         }
 
         failure {
-            echo 'CI pipeline failed'
+            echo 'CI pipeline failed!'
         }
     }
 }
+
+
