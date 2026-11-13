@@ -1,4 +1,5 @@
 
+
 pipeline {
     agent any
 
@@ -12,20 +13,20 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Checking Python application'
-                bat 'python -m py_compile app.py'
+                bat 'py -m py_compile app.py'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Executing automated test'
-                bat 'python -m unittest app'
+                bat 'py -m unittest app'
             }
         }
 
         stage('Run application') {
             steps {
-                bat 'python app.py'
+                bat 'py app.py'
             }
         }
     }
@@ -40,4 +41,3 @@ pipeline {
         }
     }
 }
-
